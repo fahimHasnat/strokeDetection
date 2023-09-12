@@ -5,7 +5,7 @@ import seaborn as sns
 import plotly.express as px
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import confusion_matrix, accuracy_score, classification_report, ConfusionMatrixDisplay
+from sklearn.metrics import confusion_matrix, roc_curve, accuracy_score, classification_report, ConfusionMatrixDisplay
 
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
@@ -113,11 +113,19 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=.20)
 #
 # accuracy_score(y_test, y_pred)
 #
+# # Confusion Matrix
 # confusion_matrix = confusion_matrix(y_test, y_pred)
-#
 # cm_display = ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
-#
 # cm_display.plot()
+# plt.show()
+
+# # ROC Curve
+# fpr, tpr, thresholds = roc_curve(y_test, y_pred)
+# plt.plot(fpr, tpr)
+# plt.plot([0, 1], [0, 1], '--')
+# plt.xlabel('False Positive Rate')
+# plt.ylabel('True Positive Rate')
+# plt.title('ROC Curve')
 # plt.show()
 
 # KNN
@@ -127,11 +135,19 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=.20)
 # y_pred = knn.predict(x_test)
 # accuracy_score(y_test, y_pred)
 #
+# # Confusion Matrix
 # confusion_matrix = confusion_matrix(y_test, y_pred)
-#
 # cm_display = ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
-#
 # cm_display.plot()
+# plt.show()
+
+# # ROC Curve
+# fpr, tpr, thresholds = roc_curve(y_test, y_pred)
+# plt.plot(fpr, tpr)
+# plt.plot([0, 1], [0, 1], '--')
+# plt.xlabel('False Positive Rate')
+# plt.ylabel('True Positive Rate')
+# plt.title('ROC Curve')
 # plt.show()
 #
 
@@ -142,11 +158,20 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=.20)
 # NB_model.fit(x_train, y_train)
 # y_pred = NB_model.predict(x_test)
 # accuracy_score(y_test, y_pred)
+
+# # Confusion Matrix
 # confusion_matrix = confusion_matrix(y_test, y_pred)
-#
 # cm_display = ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
-#
 # cm_display.plot()
+# plt.show()
+
+# # ROC Curve
+# fpr, tpr, thresholds = roc_curve(y_test, y_pred)
+# plt.plot(fpr, tpr)
+# plt.plot([0, 1], [0, 1], '--')
+# plt.xlabel('False Positive Rate')
+# plt.ylabel('True Positive Rate')
+# plt.title('ROC Curve')
 # plt.show()
 #
 # # SVC
@@ -157,11 +182,19 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=.20)
 # y_pred = svm.predict(x_test)
 # accuracy_score(y_test, y_pred)
 #
+# # Confusion Matrix
 # confusion_matrix = confusion_matrix(y_test, y_pred)
-#
-# cm_display = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix, display_labels=[False, True])
-#
+# cm_display = ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
 # cm_display.plot()
+# plt.show()
+
+# # ROC Curve
+# fpr, tpr, thresholds = roc_curve(y_test, y_pred)
+# plt.plot(fpr, tpr)
+# plt.plot([0, 1], [0, 1], '--')
+# plt.xlabel('False Positive Rate')
+# plt.ylabel('True Positive Rate')
+# plt.title('ROC Curve')
 # plt.show()
 #
 # # Logistic Regression
@@ -171,11 +204,20 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=.20)
 #
 # y_pred = lr_model.predict(x_test)
 # accuracy_score(y_test, y_pred)
+
+# # Confusion Matrix
 # confusion_matrix = confusion_matrix(y_test, y_pred)
-#
 # cm_display = ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
-#
 # cm_display.plot()
+# plt.show()
+
+# # ROC Curve
+# fpr, tpr, thresholds = roc_curve(y_test, y_pred)
+# plt.plot(fpr, tpr)
+# plt.plot([0, 1], [0, 1], '--')
+# plt.xlabel('False Positive Rate')
+# plt.ylabel('True Positive Rate')
+# plt.title('ROC Curve')
 # plt.show()
 #
 # # Random Forest
@@ -185,11 +227,20 @@ rf_model.fit(x_train, y_train)
 
 y_pred = rf_model.predict(x_test)
 print(accuracy_score(y_test, y_pred))
+
+# Confusion Matrix
 confusion_matrix = confusion_matrix(y_test, y_pred)
-
 cm_display = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix, display_labels=[False, True])
-
 cm_display.plot()
+plt.show()
+
+# ROC Curve
+fpr, tpr, thresholds = roc_curve(y_test, y_pred)
+plt.plot(fpr, tpr)
+plt.plot([0, 1], [0, 1], '--')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('ROC Curve')
 plt.show()
 #
 # # Voting Technique
