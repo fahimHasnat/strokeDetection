@@ -5,7 +5,7 @@ import seaborn as sns
 import plotly.express as px
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
+from sklearn.metrics import confusion_matrix, accuracy_score, classification_report, ConfusionMatrixDisplay
 
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
@@ -26,13 +26,13 @@ df.dropna(inplace=True)
 df.isnull().sum().sum()
 num_cols = ['age', 'bmi', 'avg_glucose_level']
 
-plt.figure(figsize=(15, 5))
-for i in range(3):
-    plt.subplot(1, 3, i + 1)
-
-    sns.boxplot(x=df[num_cols[i]], color='#6DA59D')
-    plt.title(num_cols[i])
-plt.show()
+# plt.figure(figsize=(15, 5))
+# for i in range(3):
+#     plt.subplot(1, 3, i + 1)
+#
+#     sns.boxplot(x=df[num_cols[i]], color='#6DA59D')
+#     plt.title(num_cols[i])
+# plt.show()
 
 
 def detect_outliers(data, column):
@@ -104,84 +104,129 @@ x = scaler.fit_transform(x)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=.20)
 
-# Decision Tree
-print("Decision Tree")
-tree_model = DecisionTreeClassifier(criterion='entropy')
-tree_model.fit(x_train, y_train)
-
-y_pred = tree_model.predict(x_test)
-
-accuracy_score(y_test, y_pred)
+# # Decision Tree
+# print("Decision Tree")
+# tree_model = DecisionTreeClassifier(criterion='entropy')
+# tree_model.fit(x_train, y_train)
+#
+# y_pred = tree_model.predict(x_test)
+#
+# accuracy_score(y_test, y_pred)
+#
+# confusion_matrix = confusion_matrix(y_test, y_pred)
+#
+# cm_display = ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
+#
+# cm_display.plot()
+# plt.show()
 
 # KNN
-print("Knn")
-knn = KNeighborsClassifier(n_neighbors=3)
-knn.fit(x_train, y_train)
-y_pred = knn.predict(x_test)
-accuracy_score(y_test, y_pred)
+# print("Knn")
+# knn = KNeighborsClassifier(n_neighbors=3)
+# knn.fit(x_train, y_train)
+# y_pred = knn.predict(x_test)
+# accuracy_score(y_test, y_pred)
+#
+# confusion_matrix = confusion_matrix(y_test, y_pred)
+#
+# cm_display = ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
+#
+# cm_display.plot()
+# plt.show()
+#
 
-# Naive Bayes
-NB_model = GaussianNB()
-NB_model.fit(x_train, y_train)
-y_pred = NB_model.predict(x_test)
-accuracy_score(y_test, y_pred)
-
-# SVC
-svm = SVC()
-svm.fit(x_train, y_train)
-
-y_pred = svm.predict(x_test)
-accuracy_score(y_test, y_pred)
-
-# Logistic Regression
-lr_model = LogisticRegression()
-lr_model.fit(x_train, y_train)
-
-y_pred = lr_model.predict(x_test)
-accuracy_score(y_test, y_pred)
-
-# Random Forest
-rf_model = RandomForestClassifier(n_estimators=150,criterion='entropy',random_state = 123)
-rf_model.fit(x_train,y_train)
+#
+# # Naive Bayes
+# print("Naive Bayes")
+# NB_model = GaussianNB()
+# NB_model.fit(x_train, y_train)
+# y_pred = NB_model.predict(x_test)
+# accuracy_score(y_test, y_pred)
+# confusion_matrix = confusion_matrix(y_test, y_pred)
+#
+# cm_display = ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
+#
+# cm_display.plot()
+# plt.show()
+#
+# # SVC
+# print("SVC")
+# svm = SVC()
+# svm.fit(x_train, y_train)
+#
+# y_pred = svm.predict(x_test)
+# accuracy_score(y_test, y_pred)
+#
+# confusion_matrix = confusion_matrix(y_test, y_pred)
+#
+# cm_display = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix, display_labels=[False, True])
+#
+# cm_display.plot()
+# plt.show()
+#
+# # Logistic Regression
+# print("Logistic Regression")
+# lr_model = LogisticRegression()
+# lr_model.fit(x_train, y_train)
+#
+# y_pred = lr_model.predict(x_test)
+# accuracy_score(y_test, y_pred)
+# confusion_matrix = confusion_matrix(y_test, y_pred)
+#
+# cm_display = ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
+#
+# cm_display.plot()
+# plt.show()
+#
+# # Random Forest
+print("Random Forest")
+rf_model = RandomForestClassifier(n_estimators=150, criterion='entropy', random_state=123)
+rf_model.fit(x_train, y_train)
 
 y_pred = rf_model.predict(x_test)
-accuracy_score(y_test,y_pred)
+print(accuracy_score(y_test, y_pred))
+confusion_matrix = confusion_matrix(y_test, y_pred)
 
-# Voting Technique
-svm = SVC()
-LR = LogisticRegression()
-tree = DecisionTreeClassifier()
-knn = KNeighborsClassifier(n_neighbors=3)
+cm_display = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix, display_labels=[False, True])
 
-models = [('SVM',svm),('Decision Tree',tree),('Logistic Regerssion',LR) , ('KNN',knn)]
-
-voting_model = VotingClassifier(
-    estimators= models
-)
-
-y_pred = voting_model.predict(x_test)
-accuracy_score(y_test,y_pred)
-
-# Bagging Model
-bagging = BaggingClassifier(
-    estimator = knn,
-    n_estimators = 10
-)
-
-bagging.fit(x_train , y_train)
-
-y_pred = bagging.predict(x_test)
-accuracy_score(y_test,y_pred)
-
-# Stacking Technique
-base_models = [('SVM',SVC()),('Decision Tree',DecisionTreeClassifier()),('Logistic Regerssion',LogisticRegression()) , ('KNN',KNeighborsClassifier(n_neighbors=3))]
-stacking = StackingClassifier(
-    estimators = base_models ,
-    final_estimator = LogisticRegression(),
-    cv = 5
-)
-
-stacking.fit(x_train , y_train)
-
-y_pred = stacking.predict(x_test)
-accuracy_score(y_test,y_pred)
+cm_display.plot()
+plt.show()
+#
+# # Voting Technique
+# svm = SVC()
+# LR = LogisticRegression()
+# tree = DecisionTreeClassifier()
+# knn = KNeighborsClassifier(n_neighbors=3)
+#
+# models = [('SVM',svm),('Decision Tree',tree),('Logistic Regerssion',LR) , ('KNN',knn)]
+#
+# voting_model = VotingClassifier(
+#     estimators= models
+# )
+#
+# y_pred = voting_model.predict(x_test)
+# accuracy_score(y_test,y_pred)
+#
+# # Bagging Model
+# bagging = BaggingClassifier(
+#     estimator = knn,
+#     n_estimators = 10
+# )
+#
+# bagging.fit(x_train , y_train)
+#
+# y_pred = bagging.predict(x_test)
+# accuracy_score(y_test,y_pred)
+#
+# # Stacking Technique
+# base_models = [('SVM',SVC()),('Decision Tree',DecisionTreeClassifier()),('Logistic Regerssion',LogisticRegression()) , ('KNN',KNeighborsClassifier(n_neighbors=3))]
+# stacking = StackingClassifier(
+#     estimators = base_models ,
+#     final_estimator = LogisticRegression(),
+#     cv = 5
+# )
+#
+# stacking.fit(x_train , y_train)
+#
+# y_pred = stacking.predict(x_test)
+# accuracy_score(y_test,y_pred)
